@@ -2,15 +2,18 @@
 ## iOS 一款可绕指定点旋转、缩放的多功能贴纸
 ### 支持双指手势操作，单指移动控制图操作，满足你所有需求
 
+</br>
 
 ### 先上效果图：
 
 ![image](https://github.com/HuangGY1993/GYStickerView/blob/master/res/GYStickerView.gif)
 
+</br>
+</br>
 
 ### 示例用法：
 
-把Demo中GYStickerView文件夹添加到项目,#import "GYStickerView.h"
+#### 把Demo中GYStickerView文件夹添加到项目,#import "GYStickerView.h"
 
 #### CtrlTypeGesture:双指手势模式，支持等比缩放，绕中心旋转，可设置ScaleMode（缩放模式，通过改变bounds或transform达到缩放效果）
 示例代码：
@@ -51,8 +54,9 @@
 ![image](https://github.com/HuangGY1993/GYStickerView/blob/master/res/CtrlTypeTwo.png)
 
  
- 
- 
+</br> 
+</br>
+</br>
  
 ### 部分属性分析：
 #### 指定点originalPoint
