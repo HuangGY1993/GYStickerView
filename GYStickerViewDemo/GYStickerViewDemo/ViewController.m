@@ -31,14 +31,10 @@
 
 - (void)addStickerViewWithContentView:(UIView *)contentView {
     GYStickerView *stickerView = [[GYStickerView alloc] initWithContentView:contentView];
-    stickerView.ctrlType = GYStickerViewCtrlTypeTwo;
+    stickerView.ctrlType = self.ctrlType;
     stickerView.scaleMode = GYStickerViewScaleModeBounds;
-    stickerView.scaleFit = NO;
-    stickerView.originalPoint = CGPointMake(0, 0);
-    //[stickerView showOriginalPoint:YES];
-
-
-
+    stickerView.originalPoint = CGPointMake(0.2, 0.2);
+    [stickerView showOriginalPoint:YES];
     [stickerView setTransformCtrlImage:[UIImage imageNamed:@"image_btn_resize"]];
     [stickerView setResizeCtrlImage:[UIImage imageNamed:@"image_btn_resize"] rotateCtrlImage:[UIImage imageNamed:@"image_btn_rotate"]];
     [stickerView setRemoveCtrlImage:[UIImage imageNamed:@"image_btn_remove"]];
