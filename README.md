@@ -24,8 +24,9 @@
         [self.view addSubview:stickerView];
 效果：
 ![image](https://github.com/HuangGY1993/GYStickerView/blob/master/res/CtrlTypeGesture.png)
- 
- 
+
+</br>
+
 #### CtrlTypeOne:一个控制图模式，同时控制旋转和缩放，支持等比缩放，可设置绕指定点旋转，可设置ScaleMode
 示例代码：
 
@@ -37,7 +38,8 @@
         [self.view addSubview:stickerView];
 效果：
 ![image](https://github.com/HuangGY1993/GYStickerView/blob/master/res/CtrlTypeOne.png)
- 
+
+</br>
  
 #### CtrlTypeTwo:两个控制图模式，右下角控制图控制缩放，右上角控制图控制旋转，支持等比缩放和自由缩放，可设置绕指定点旋转，可设置ScaleMode
 #### 注意：自由缩放不支持ScaleModeTransform
@@ -69,6 +71,7 @@
         */
         @property (nonatomic) CGPoint originalPoint;
 可通过方法(showOriginalPoint:)显示红色的指定参考点
+</br>
 
 #### 是否为等比缩放scaleFit
         /**
@@ -82,6 +85,7 @@
 ![image](https://github.com/HuangGY1993/GYStickerView/blob/master/res/等比缩放.gif)</br>
 自由缩放：</br>
 ![image](https://github.com/HuangGY1993/GYStickerView/blob/master/res/自由缩放.gif)</br>
+</br>
 
 #### 缩放模式scaleMode
         typedef NS_ENUM(NSInteger, GYStickerViewScaleMode) {
@@ -94,6 +98,6 @@ ScaleModeBounds:</br>
 ![image](https://github.com/HuangGY1993/GYStickerView/blob/master/res/ScaleModeBounds.gif)</br>
 ScaleModeTransform:</br>
 ![image](https://github.com/HuangGY1993/GYStickerView/blob/master/res/ScaleModeTransform.gif)</br>
-
+</br>
 
 ### 欢迎下载Demo体验，有问题的可以提Issues，大家互相学习。觉得还不错的请给个赞。你的点赞就是我创作的动力！！
