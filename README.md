@@ -77,14 +77,21 @@
         */
         @property (nonatomic, getter=isScaleFit) BOOL scaleFit;
 等比缩放：
-![image](https://github.com/HuangGY1993/GYStickerView/blob/master/res/CtrlTypeTwo.png)
+![image](https://github.com/HuangGY1993/GYStickerView/blob/master/res/等比缩放.gif)
 自由缩放：
-![image](https://github.com/HuangGY1993/GYStickerView/blob/master/res/CtrlTypeTwo.png)
+![image](https://github.com/HuangGY1993/GYStickerView/blob/master/res/自由缩放.gif)
+
+######缩放模式scaleMode
+        typedef NS_ENUM(NSInteger, GYStickerViewScaleMode) {
+            GYStickerViewScaleModeBounds,    //通过改变self.bounds达到缩放效果
+            GYStickerViewScaleModeTransform  //通过改变self.transform达到缩放效果
+        };
+
+        @property (nonatomic) GYStickerViewScaleMode scaleMode;
+ScaleModeBounds:
+![image](https://github.com/HuangGY1993/GYStickerView/blob/master/res/ScaleModeBounds)
+ScaleModeTransform:
+![image](https://github.com/HuangGY1993/GYStickerView/blob/master/res/ScaleModeTransform.gif)
 
 
-使用前请注意：
-
-        SpectrumView.frame.size.width / SpectrumView.numberOfItems >= 5
-
-        默认SpectrumView.numberOfItems = 20 (可修改，必须为偶数)，所以SpectrumView.frame.size.width默认要大于100
-        例如：SpectrumView * spectrumView = [[SpectrumView alloc] initWithFrame:CGRectMake(0,0,100,40)];
+####欢迎下载Demo体验，有问题的可以提Issues，大家互相学习。觉得还不错的请给个赞。你的点赞就是我创作的动力！！
