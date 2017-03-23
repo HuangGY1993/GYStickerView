@@ -72,6 +72,8 @@
         @property (nonatomic) CGPoint originalPoint;
 可通过方法(showOriginalPoint:)显示红色的指定参考点
 </br>
+效果：</br>
+![image](https://github.com/HuangGY1993/GYStickerView/blob/master/res/Specify%20Point.gif)</br>
 
 #### 是否为等比缩放scaleFit
         /**
