@@ -31,11 +31,14 @@
 
 - (void)addStickerViewWithContentView:(UIView *)contentView {
     GYStickerView *stickerView = [[GYStickerView alloc] initWithContentView:contentView];
-    stickerView.ctrlType = self.ctrlType;
+    stickerView.ctrlType = GYStickerViewCtrlTypeTwo;
     stickerView.scaleMode = GYStickerViewScaleModeBounds;
-    stickerView.originalPoint = CGPointMake(-0.2, -0.2);
-    [stickerView showCtrlPoint:YES];
-    stickerView.scaleFit = YES;
+    stickerView.scaleFit = NO;
+    stickerView.originalPoint = CGPointMake(0, 0);
+    //[stickerView showOriginalPoint:YES];
+
+
+
     [stickerView setTransformCtrlImage:[UIImage imageNamed:@"image_btn_resize"]];
     [stickerView setResizeCtrlImage:[UIImage imageNamed:@"image_btn_resize"] rotateCtrlImage:[UIImage imageNamed:@"image_btn_rotate"]];
     [stickerView setRemoveCtrlImage:[UIImage imageNamed:@"image_btn_remove"]];
@@ -51,7 +54,9 @@
 
 - (IBAction)addTextStickerView:(id)sender {
     UITextView *textView = [[UITextView alloc] initWithFrame:CGRectMake(150, 250, 100, 100)];
-    textView.text = @"Hello,Genie!\nHello,Genie!!!";
+    textView.text = @"Hello,Genie,Hello,Genie,Hello,Genie,Hello,Genie!";
+    textView.font = [UIFont systemFontOfSize:16];
+    textView.backgroundColor = [UIColor greenColor];
     [self addStickerViewWithContentView:textView];
 }
 

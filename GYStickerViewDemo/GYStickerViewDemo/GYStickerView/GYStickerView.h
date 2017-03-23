@@ -66,7 +66,7 @@ typedef NS_ENUM(NSInteger, GYStickerViewCtrlType) {
 
  注意：CtrlTypeGesture 仅支持中心点，该方法无效
  */
-- (void)showCtrlPoint:(BOOL)b;
+- (void)showOriginalPoint:(BOOL)b;
 
 /**
  显示左上角移除按钮，默认显示

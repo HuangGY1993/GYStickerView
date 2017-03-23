@@ -536,7 +536,7 @@
 
 #pragma mark - Actions
 
-- (void)showCtrlPoint:(BOOL)b {
+- (void)showOriginalPoint:(BOOL)b {
     if (self.ctrlType == GYStickerViewCtrlTypeGesture) {
         return;
     }
