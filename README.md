@@ -89,7 +89,7 @@
 
         @property (nonatomic) GYStickerViewScaleMode scaleMode;
 ScaleModeBounds:
-![image](https://github.com/HuangGY1993/GYStickerView/blob/master/res/ScaleModeBounds)
+![image](https://github.com/HuangGY1993/GYStickerView/blob/master/res/ScaleModeBounds.gif)
 ScaleModeTransform:
 ![image](https://github.com/HuangGY1993/GYStickerView/blob/master/res/ScaleModeTransform.gif)
 
