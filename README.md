@@ -60,7 +60,6 @@
         指定参考点(比例)，不设置默认为中心点 CGPoint(0.5, 0.5)
         范围：x: 0 --- 1
              y: 0 --- 1
-
         提示：可以超出范围，设置参考点在self外面
         注意：CtrlTypeGesture  仅支持中心点，该属性无效
         */
@@ -71,14 +70,13 @@
         /**
         等比缩放 : YES
         自由缩放 : NO
-
         注意：1、仅适用于CtrlTypeTwo的缩放，默认YES.  
              2、与ScaleModeTransform不兼容，待完善
         */
         @property (nonatomic, getter=isScaleFit) BOOL scaleFit;
-等比缩放：
+######等比缩放：
 ![image](https://github.com/HuangGY1993/GYStickerView/blob/master/res/等比缩放.gif)
-自由缩放：
+######自由缩放：
 ![image](https://github.com/HuangGY1993/GYStickerView/blob/master/res/自由缩放.gif)
 
 ######缩放模式scaleMode
@@ -88,9 +86,9 @@
         };
 
         @property (nonatomic) GYStickerViewScaleMode scaleMode;
-ScaleModeBounds:
+######ScaleModeBounds:
 ![image](https://github.com/HuangGY1993/GYStickerView/blob/master/res/ScaleModeBounds.gif)
-ScaleModeTransform:
+######ScaleModeTransform:
 ![image](https://github.com/HuangGY1993/GYStickerView/blob/master/res/ScaleModeTransform.gif)
 
 
