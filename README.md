@@ -1,14 +1,24 @@
 # GYStickerView
 ### iOS 一款可绕指定点旋转、缩放的多功能贴纸
-#### 支持双指手势操作，单指控制图操作，满足你所有需求
+#### 支持双指手势操作，单指移动控制图操作，满足你所有需求
 
 
-先上效果图：
+#####先上效果图：
 
-![image](https://github.com/HuangGY1993/GYSpectrum/blob/master//display.gif)
+![image](https://github.com/HuangGY1993/GYStickerView/blob/master/GYStickerView.gif)
 
 
-示例用法：
+#####示例用法：
+
+######CtrlTypeGesture:双指手势模式，支持等比缩放，绕中心旋转，可设置ScaleMode
+示例代码：
+
+        GYStickerView *stickerView = [[GYStickerView alloc] initWithContentView:yourCustomView];
+        stickerView.ctrlType = GYStickerViewCtrlTypeGesture;
+        stickerView.scaleMode = GYStickerViewScaleModeTransform;
+        [self.view addSubview:stickerView];
+效果：
+![image](https://github.com/HuangGY1993/GYStickerView/blob/master/GYStickerView.gif)
 
         SpectrumView * spectrumView = [[SpectrumView alloc] initWithFrame:CGRectMake(CGRectGetMidX(self.view.frame) - 100,180,200, 40.0)];
         spectrumView.text = [NSString stringWithFormat:@"%d",0];

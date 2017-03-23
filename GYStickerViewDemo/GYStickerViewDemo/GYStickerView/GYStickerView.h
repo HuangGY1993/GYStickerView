@@ -12,7 +12,7 @@
 typedef NS_ENUM(NSInteger, GYStickerViewScaleMode) {
     GYStickerViewScaleModeBounds,    //通过改变self.bounds达到缩放效果
     GYStickerViewScaleModeTransform  //通过改变self.transform达到缩放效果
-};//注意：仅适用于CtrlTypeGesture
+};
 
 typedef NS_ENUM(NSInteger, GYStickerViewCtrlType) {
     GYStickerViewCtrlTypeGesture,    //手势,无控制图，双指控制旋转和缩放
@@ -46,7 +46,8 @@ typedef NS_ENUM(NSInteger, GYStickerViewCtrlType) {
  等比缩放 : YES
  自由缩放 : NO
 
- 注意：仅适用于CtrlTypeTwo的缩放，默认YES
+ 注意：1、仅适用于CtrlTypeTwo的缩放，默认YES.  
+      2、与ScaleModeTransform不兼容，待完善
  */
 @property (nonatomic, getter=isScaleFit) BOOL scaleFit;
 

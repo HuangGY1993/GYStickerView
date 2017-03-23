@@ -281,6 +281,7 @@
                                  self.bounds.size.height * scale);
     } else {
         self.transform = CGAffineTransformScale(self.transform, scale, scale);
+        [self fitCtrlScaleX:scale scaleY:scale];
     }
     gesture.scale = 1;
 }
@@ -308,37 +309,64 @@
 
     // rotate
     [self rotateAroundOPointWithCtrlPoint:ctrlPoint];
+
+    self.lastCtrlPoint = ctrlPoint;
 }
 
 
 #pragma mark - 手势响应事件 --- 两个控制图
 
 - (void)rotateCtrlPan:(UIPanGestureRecognizer *)gesture {
+    if (gesture.state == UIGestureRecognizerStateBegan) {
+        self.lastCtrlPoint = [self convertPoint:self.rotateCtrl.center toView:self.superview];
+        return;
+    }
+    
     CGPoint ctrlPoint = [gesture locationInView:self.superview];
     [self rotateAroundOPointWithCtrlPoint:ctrlPoint];
+
+    self.lastCtrlPoint = ctrlPoint;
 }
 
 - (void)resizeCtrlPan:(UIPanGestureRecognizer *)gesture {
     //等比缩放
-    if (self.scaleFit) {
+    if (self.isScaleFit) {
         if (gesture.state == UIGestureRecognizerStateBegan) {
-            self.lastCtrlPoint = [self convertPoint:self.transformCtrl.center toView:self.superview];
+            self.lastCtrlPoint = [self convertPoint:self.resizeCtrl.center toView:self.superview];
             return;
         }
 
         CGPoint ctrlPoint = [gesture locationInView:self.superview];
         [self scaleFitWithCtrlPoint:ctrlPoint];
+
+        self.lastCtrlPoint = ctrlPoint;
         return;
     }
 
-    //自由缩放
+    //自由缩放 ScaleModeBounds
+
     if (gesture.state == UIGestureRecognizerStateBegan) {
-        self.lastCtrlPoint = self.transformCtrl.center;
+        self.lastCtrlPoint = self.resizeCtrl.center;
         return;
     }
 
     CGPoint ctrlPoint = [gesture locationInView:self];
-    [self scaleFreeWithCtrlPoint:ctrlPoint ctrlCenter:self.resizeCtrl.center];
+    [self scaleFreeByChangeBoundsWithCtrlPoint:ctrlPoint ctrlCenter:self.resizeCtrl.center];
+
+    self.lastCtrlPoint = ctrlPoint;
+    return;
+
+
+    //自由缩放 ScaleModeTransform
+    /*if (gesture.state == UIGestureRecognizerStateBegan) {
+        self.lastCtrlPoint = [self convertPoint:self.resizeCtrl.center toView:self.superview];
+        return;
+    }
+
+    CGPoint ctrlPoint = [gesture locationInView:self.superview];
+    [self scaleFreeByChangeTransformWithCtrlPoint:ctrlPoint ctrlCenter:self.resizeCtrl.center];
+
+    self.lastCtrlPoint = ctrlPoint;*/
 }
 
 
@@ -352,8 +380,9 @@
 
 
     float angle = atan2(self.center.y - ctrlPoint.y, ctrlPoint.x - self.center.x);
-    angle = self.initialAngle - angle;
-    self.transform = CGAffineTransformMakeRotation(angle);
+    float lastAngle = atan2(self.center.y - self.lastCtrlPoint.y, self.lastCtrlPoint.x - self.center.x);
+    angle = - angle + lastAngle;
+    self.transform = CGAffineTransformRotate(self.transform, angle);
 
 
     oPoint = [self convertPoint:[self getRealOriginalPoint] toView:self.superview];
@@ -374,22 +403,26 @@
     CGFloat preDistance = [self distanceWithStartPoint:self.center endPoint:self.lastCtrlPoint];
     CGFloat newDistance = [self distanceWithStartPoint:self.center endPoint:ctrlPoint];
     CGFloat scale = newDistance / preDistance;
-    self.bounds = CGRectMake(self.bounds.origin.x,
-                             self.bounds.origin.y,
-                             self.bounds.size.width * scale,
-                             self.bounds.size.height * scale);
+    if (self.scaleMode == GYStickerViewScaleModeBounds) {
+        self.bounds = CGRectMake(self.bounds.origin.x,
+                                 self.bounds.origin.y,
+                                 self.bounds.size.width * scale,
+                                 self.bounds.size.height * scale);
+        [self updateCtrlPoint];
+    } else {
+        self.transform = CGAffineTransformScale(self.transform, scale, scale);
+        [self fitCtrlScaleX:scale scaleY:scale];
+    }
+
 
 
     oPoint = [self convertPoint:[self getRealOriginalPoint] toView:self.superview];
     self.center = CGPointMake(self.center.x + (self.center.x - oPoint.x),
                               self.center.y + (self.center.y - oPoint.y));
-
-    self.lastCtrlPoint = ctrlPoint;
-    [self updateCtrlPoint];
 }
 
-/* 自由缩放 */
-- (void)scaleFreeWithCtrlPoint:(CGPoint)ctrlPoint ctrlCenter:(CGPoint)ctrlCenter{
+/* 自由缩放 ScaleModeBounds */
+- (void)scaleFreeByChangeBoundsWithCtrlPoint:(CGPoint)ctrlPoint ctrlCenter:(CGPoint)ctrlCenter {
     CGPoint oPoint = [self convertPoint:[self getRealOriginalPoint] toView:self.superview];
     self.center = oPoint;
 
@@ -411,14 +444,44 @@
                                  self.bounds.origin.y,
                                  self.bounds.size.width + cX,
                                  self.bounds.size.height + cY);
+        [self updateCtrlPoint];
     }
+
 
     oPoint = [self convertPoint:[self getRealOriginalPoint] toView:self.superview];
     self.center = CGPointMake(self.center.x + (self.center.x - oPoint.x),
                               self.center.y + (self.center.y - oPoint.y));
+}
 
-    self.lastCtrlPoint = ctrlPoint;
-    [self updateCtrlPoint];
+/* 自由缩放 ScaleModeTransform */
+/*- (void)scaleFreeByChangeTransformWithCtrlPoint:(CGPoint)ctrlPoint ctrlCenter:(CGPoint)ctrlCenter {
+    CGPoint oPoint = [self convertPoint:[self getRealOriginalPoint] toView:self.superview];
+    self.center = oPoint;
+
+
+    CGFloat cX = ctrlPoint.x - self.lastCtrlPoint.x;
+    CGFloat cY = ctrlPoint.y - self.lastCtrlPoint.y;
+    CGFloat preDistanceX = self.lastCtrlPoint.x - self.center.x;
+    CGFloat preDistanceY = self.lastCtrlPoint.y - self.center.y;
+    CGFloat scaleX = cX / preDistanceX + 1;
+    CGFloat scaleY = cY / preDistanceY + 1;
+
+    self.transform = CGAffineTransformScale(self.transform, scaleX, scaleY);
+    [self fitCtrlScaleX:scaleX scaleY:scaleY];
+
+
+    oPoint = [self convertPoint:[self getRealOriginalPoint] toView:self.superview];
+    self.center = CGPointMake(self.center.x + (self.center.x - oPoint.x),
+                              self.center.y + (self.center.y - oPoint.y));
+}*/
+
+/* 控制图保持大小不变 */
+- (void)fitCtrlScaleX:(CGFloat)scaleX scaleY:(CGFloat)scaleY {
+    self.removeCtrl.transform = CGAffineTransformScale(self.removeCtrl.transform, 1/scaleX, 1/scaleY);
+    self.transformCtrl.transform = CGAffineTransformScale(self.transformCtrl.transform, 1/scaleX, 1/scaleY);
+    self.resizeCtrl.transform = CGAffineTransformScale(self.resizeCtrl.transform, 1/scaleX, 1/scaleY);
+    self.rotateCtrl.transform = CGAffineTransformScale(self.rotateCtrl.transform, 1/scaleX, 1/scaleY);
+    self.oCtrlPointView.transform = CGAffineTransformScale(self.oCtrlPointView.transform, 1/scaleX, 1/scaleY);
 }
 
 
@@ -486,6 +549,7 @@
         layer.fillColor = [UIColor redColor].CGColor;
         layer.path = path.CGPath;
         [self.oCtrlPointView.layer addSublayer:layer];
+        self.oCtrlPointView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin;
     }
     self.oCtrlPointView.hidden = !b;
 }
