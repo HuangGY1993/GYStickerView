@@ -139,10 +139,10 @@
 }
 
 - (void)setOriginalPoint:(CGPoint)originalPoint {
-    if (self.ctrlType == GYStickerViewCtrlTypeGesture) {
-        _originalPoint = CGPointMake(0.5, 0.5);
-        return;
-    }
+//    if (self.ctrlType == GYStickerViewCtrlTypeGesture) {
+//        _originalPoint = CGPointMake(0.5, 0.5);
+//        return;
+//    }
     _originalPoint = originalPoint;
     [self updateCtrlPoint];
 }
@@ -268,21 +268,87 @@
 #pragma mark - 手势响应事件 --- 无控制图
 
 - (void)rotate:(UIRotationGestureRecognizer *)gesture {
+    NSUInteger touchCount = gesture.numberOfTouches;
+    if (touchCount <= 1) {
+        return;
+    }
+
+    CGPoint p1 = [gesture locationOfTouch: 0 inView:self];
+    CGPoint p2 = [gesture locationOfTouch: 1 inView:self];
+    CGPoint newCenter = CGPointMake((p1.x+p2.x)/2,(p1.y+p2.y)/2);
+    self.originalPoint = CGPointMake(newCenter.x/self.bounds.size.width, newCenter.y/self.bounds.size.height);
+
+    CGPoint oPoint = [self convertPoint:[self getRealOriginalPoint] toView:self.superview];
+    self.center = oPoint;
+
     self.transform = CGAffineTransformRotate(self.transform, gesture.rotation);
     gesture.rotation = 0;
+
+    oPoint = [self convertPoint:[self getRealOriginalPoint] toView:self.superview];
+    self.center = CGPointMake(self.center.x + (self.center.x - oPoint.x),
+                              self.center.y + (self.center.y - oPoint.y));
+
+//    self.transform = CGAffineTransformRotate(self.transform, gesture.rotation);
+//    gesture.rotation = 0;
 }
 
 - (void)pinch:(UIPinchGestureRecognizer *)gesture {
+
+
+    NSUInteger touchCount = gesture.numberOfTouches;
+    if (touchCount <= 1) {
+        return;
+    }
+
+    CGPoint p1 = [gesture locationOfTouch: 0 inView:self];
+    CGPoint p2 = [gesture locationOfTouch: 1 inView:self];
+    CGPoint newCenter = CGPointMake((p1.x+p2.x)/2,(p1.y+p2.y)/2);
+    self.originalPoint = CGPointMake(newCenter.x/self.bounds.size.width, newCenter.y/self.bounds.size.height);
+
+
+    CGPoint oPoint = [self convertPoint:[self getRealOriginalPoint] toView:self.superview];
+    self.center = oPoint;
+
+
     CGFloat scale = gesture.scale;
     if (self.scaleMode == GYStickerViewScaleModeBounds) {
         self.bounds = CGRectMake(self.bounds.origin.x,
                                  self.bounds.origin.y,
                                  self.bounds.size.width * scale,
                                  self.bounds.size.height * scale);
+        self.contentView.maskView.frame = self.contentView.bounds;
+
+        NSLog(@"count:%lu",(unsigned long)self.contentView.subviews.count);
+        if (self.contentView.subviews.count >= 1) {
+            UIView *view = self.contentView.subviews.firstObject;
+            CGPoint center = view.center;
+            view.bounds = CGRectMake(view.bounds.origin.x,
+                                     view.bounds.origin.y,
+                                     view.bounds.size.width * scale,
+                                     view.bounds.size.height * scale);
+            view.center = CGPointMake(center.x * scale, center.y * scale);
+        }
+
     } else {
         self.transform = CGAffineTransformScale(self.transform, scale, scale);
         [self fitCtrlScaleX:scale scaleY:scale];
     }
+
+    oPoint = [self convertPoint:[self getRealOriginalPoint] toView:self.superview];
+    self.center = CGPointMake(self.center.x + (self.center.x - oPoint.x),
+                              self.center.y + (self.center.y - oPoint.y));
+
+
+//    CGFloat scale = gesture.scale;
+//    if (self.scaleMode == GYStickerViewScaleModeBounds) {
+//        self.bounds = CGRectMake(self.bounds.origin.x,
+//                                 self.bounds.origin.y,
+//                                 self.bounds.size.width * scale,
+//                                 self.bounds.size.height * scale);
+//    } else {
+//        self.transform = CGAffineTransformScale(self.transform, scale, scale);
+//        [self fitCtrlScaleX:scale scaleY:scale];
+//    }
     gesture.scale = 1;
 }
 

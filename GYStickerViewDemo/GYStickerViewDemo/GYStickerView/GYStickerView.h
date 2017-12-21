@@ -37,7 +37,6 @@ typedef NS_ENUM(NSInteger, GYStickerViewCtrlType) {
       y: 0 --- 1
 
  提示：可以超出范围，设置参考点在self外面
- 注意：CtrlTypeGesture  仅支持中心点，该属性无效
  */
 @property (nonatomic) CGPoint originalPoint;
 
@@ -46,7 +45,7 @@ typedef NS_ENUM(NSInteger, GYStickerViewCtrlType) {
  等比缩放 : YES
  自由缩放 : NO
 
- 注意：1、仅适用于CtrlTypeTwo的缩放，默认YES.  
+ 注意：1、仅适用于CtrlTypeTwo的缩放，默认YES.  其他CtrlType也属于等比缩放
       2、与ScaleModeTransform不兼容，待完善
  */
 @property (nonatomic, getter=isScaleFit) BOOL scaleFit;

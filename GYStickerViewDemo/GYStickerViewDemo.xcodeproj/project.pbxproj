@@ -465,11 +465,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 8M3985953F;
 				INFOPLIST_FILE = GYStickerViewDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.HuangGY.GYStickerViewDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = person.HuangGY.GYStickerViewDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Debug;
 		};
@@ -477,11 +479,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 8M3985953F;
 				INFOPLIST_FILE = GYStickerViewDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.HuangGY.GYStickerViewDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = person.HuangGY.GYStickerViewDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Release;
 		};
@@ -554,6 +558,7 @@
 				3DC1C6B31E82238F001A9644 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		3DC1C6B41E82238F001A9644 /* Build configuration list for PBXNativeTarget "GYStickerViewDemoTests" */ = {
 			isa = XCConfigurationList;
@@ -562,6 +567,7 @@
 				3DC1C6B61E82238F001A9644 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		3DC1C6B71E82238F001A9644 /* Build configuration list for PBXNativeTarget "GYStickerViewDemoUITests" */ = {
 			isa = XCConfigurationList;
@@ -570,6 +576,7 @@
 				3DC1C6B91E82238F001A9644 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
